@@ -8,6 +8,7 @@ class Response < ActiveRecord::Base
 	validates :user_id, :answer_id, :reply, :presence => true
 	validate :user_different_from_creator
 	validate :reply_in_answers
+	validate :question_answered_by_user
 
 	def self.create_response(user_id, answer_id, reply)
 		self.create!(user_id: user_id,
@@ -22,9 +23,28 @@ class Response < ActiveRecord::Base
 	end
 
 	def reply_in_answers
-		unless self.answer.pluck(:body).include?(reply)
+		unless self.question.answers.pluck(:body).include?(reply)
 			errors[:answer_id] << "Pick a valid answer"
+		end
 	end
 
+	def question_answered_by_user
+		if already_answered_join?
+			errors[:reply] << "Question already answered"
+		end
+	end
+
+	def already_answered?
+		self.question.answers.each do |answer|
+			answer.users.each do |user|
+				return true if user.id == self.user.id
+			end
+		end
+		false
+	end
+
+	def already_answered_join?
+ 			self.question.responses.pluck(:'responses.user_id').include?(self.user.id)
+	end
 
 end
