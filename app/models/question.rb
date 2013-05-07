@@ -7,4 +7,8 @@ class Question
 
 	validates :body, :presence => true
 	validates :poll_id, :presence => true
+	
+	def self.create_question(poll_id, body)
+		Question.create!(poll_id: poll_id, body: body)
+	end
 end
