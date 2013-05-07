@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Poll::Application.load_tasks
+PollProject::Application.load_tasks

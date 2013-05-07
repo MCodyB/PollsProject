@@ -7,8 +7,9 @@ class Answer < ActiveRecord::Base
 	has_one :poll, :through => :question
 
 	validates :body, :question_id, :presence => true
-	
+
 	def self.create_answer(question_id, body)
 		Answer.create!(question_id: question_id, body: body)
 	end
+
 end
