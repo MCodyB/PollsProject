@@ -1,4 +1,4 @@
-class Response
+class Response < ActiveRecord::Base
 	attr_accessible :user_id, :answer_id, :reply
 	
 	belongs_to :answer

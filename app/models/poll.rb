@@ -1,4 +1,4 @@
-class Poll
+class Poll < ActiveRecord::Base
 	attr_accessible :user_id, :team_id
 
 	has_many :questions

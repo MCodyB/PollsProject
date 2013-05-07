@@ -1,4 +1,4 @@
-class Answer
+class Answer < ActiveRecord::Base
 	attr_accessible :body, :question_id
 
 	has_many :responses
