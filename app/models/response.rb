@@ -23,7 +23,7 @@ class Response < ActiveRecord::Base
 
 	def reply_in_answers
 		unless self.answer.pluck(:body).include?(reply)
-			errors[:answer_id] << "Stop trying to pad your polling numbers."
+			errors[:answer_id] << "Pick a valid answer"
 	end
 
 
