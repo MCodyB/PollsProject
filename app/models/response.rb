@@ -9,6 +9,7 @@ class Response < ActiveRecord::Base
 	validate :user_different_from_creator
 	validate :reply_in_answers
 	validate :question_answered_by_user
+	validate :user_on_team
 
 	def self.create_response(user_id, answer_id, reply)
 		self.create!(user_id: user_id,
@@ -45,6 +46,12 @@ class Response < ActiveRecord::Base
 
 	def already_answered_join?
  			self.question.responses.pluck(:'responses.user_id').include?(self.user.id)
+	end
+
+	def user_on_team
+		unless self.user.team_id == self.question.poll.team_id
+			errors[:user_id] << "Wrong team, chump"
+		end
 	end
 
 end

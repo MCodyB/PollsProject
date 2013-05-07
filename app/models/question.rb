@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
 	attr_accessible :body, :poll_id
-	has_many :answers
+	has_many :answers, :dependent => :destroy
 	belongs_to :poll
 	has_many :responses, :through => :answers
 	has_one :user, :through => :poll
